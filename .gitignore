@@ -5,5 +5,8 @@ env
 venv
 
 # caches
-
 __pycache__
+
+# sesive tokens and credentials
+credentials.json
+token.json
