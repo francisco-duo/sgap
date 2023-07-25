@@ -3,3 +3,7 @@
 .env
 env
 venv
+
+# caches
+
+__pycache__
