@@ -3,7 +3,7 @@ import os
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
-from config.dynaconf_config import settings
+from config import settings
 
 
 def connect_to_admin_sdk() -> build:
@@ -25,3 +25,7 @@ def connect_to_admin_sdk() -> build:
             )
 
     return build('admin', 'directory_v1', credentials=creds)
+
+
+if __name__ == "__main__":
+    connect_to_admin_sdk()
