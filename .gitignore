@@ -10,3 +10,6 @@ __pycache__
 # sesive tokens and credentials
 credentials.json
 token.json
+
+# .secrets
+.secrets.toml
