@@ -1,28 +1,21 @@
 from .institution import Institution
 
-from src.app.utils.collect_data import CollectData
 from src.app.utils.insert_email import insert_email_in_sophia
 from src.app.utils.return_domain import return_the_domain
+from src.app.utils.return_classroom import return_classroom_dict
 
-from src.resources.resources_sophia import get_classroom
-
-SUP_PERIOD = "2023.2"
-BASIS_PERIOD = "2023"
-
-new_students = CollectData().new_students()
-students = CollectData().all_students()
-classrooms = get_classroom.get_classroom_of_sophia()
+from src.resources.resources_google import groups_insert, members_insert
 
 
 class Institutions(Institution):
 
-    def create_user(self, ):
-        for students in new_students:
-            domain = return_the_domain(students=students["classroom"])
+    def create_user(self, students: list):
+        for s in students:
+            id = s['id']
+            rm = s['rm']
+            name = s['name']
 
-            id = students['id']
-            rm = students['rm']
-            name = students['name']
+            domain = return_the_domain(students=s["classroom"])
 
             insert_email_in_sophia(
                 id=id,
@@ -31,29 +24,24 @@ class Institutions(Institution):
                 domain=domain
             )
 
+    def create_group(self, groups: list):
+        for group in groups:
+            domain = return_the_domain(students=group["nome"])
 
-class BasicEducation(Institution):
+            body = return_classroom_dict(
+                domain=domain, name=group["nome"]
+            )
 
-    def create_group(self, ): pass
+            groups_insert.insert_group_in_admin(body=body)
 
-    def insert_user_in_group(self, ): pass
+    def insert_user_in_group(self, students: list):
+        for s in students:
+            domain = return_the_domain(students=s["classroom"])
 
-    def remove_of_group(self, ): pass
+            group = return_classroom_dict(
+                domain=domain, name=s["classroom"]
+            )
 
-
-class TechnicalEducation(Institution):
-
-    def create_group(self, ): pass
-
-    def insert_user_in_group(self, ): pass
-
-    def remove_of_group(self, ): pass
-
-
-class SuperiorEducation(Institution):
-
-    def create_group(self, ): pass
-
-    def insert_user_in_group(self, ): pass
-
-    def remove_of_group(self, ): pass
+            members_insert.insert_member_in_group(
+                group=group["email"], email=s["email"], role="MEMBER"
+            )
