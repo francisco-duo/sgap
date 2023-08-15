@@ -34,7 +34,7 @@ class CollectData:
                                 "classroom": classroom["descricao"]
                             }
 
-                            self.student_list.append(student_dict)
+                            self.new_student_list.append(student_dict)
 
         return self.new_student_list
 
@@ -60,6 +60,7 @@ class CollectData:
                             "id": student_object["codigo"],
                             "rm": student_object["codigoExterno"],
                             "name": student_object["nome"],
+                            "email": student_object["email"],
                             "classroom": classroom["descricao"],
                             "parents": [x["email"] for x in student_object["responsaveis"] if x["responsavelPedagogico"] is True]  # noqa: E501
                         }

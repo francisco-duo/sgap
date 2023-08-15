@@ -3,17 +3,14 @@ from .return_classroom import return_classroom_dict
 case_01 = return_classroom_dict(
     domain="cciweb.com.br",
     name="Maternal 1ºA - Tia Eysla",
-    period="2023"
 )
 case_02 = return_classroom_dict(
     domain="tecscci.com.br",
     name="Téc.Enf1ºM - A",
-    period="2023.2"
 )
 case_03 = return_classroom_dict(
     domain="faculdadecci.com.br",
     name="ADS03",
-    period="2023.2"
 )
 
 

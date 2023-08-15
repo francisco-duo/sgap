@@ -12,9 +12,12 @@ def return_classroom_dict(domain: str, name: str) -> dict:
                 .replace("°", "")\
                 .split("-")
 
+            normalize_name = normalize('NFKD', name_group[0])\
+                .encode('ASCII', 'ignore').decode('ASCII')
+
             return {
                 "name": f"{name_group[0]} - {period}",
-                "email": f"{name_group[0]}_{period}@{domain}".lower()
+                "email": f"{normalize_name}_{period}@{domain}".lower()
             }
 
         case "tecscci.com.br":
@@ -34,7 +37,6 @@ def return_classroom_dict(domain: str, name: str) -> dict:
                 "name": f"{name_group} {period}",
                 "email": f"{normalize_name}_{period}@{domain}".lower()
             }
-
         case "faculdadecci.com.br":
             period = "2023.2"
 

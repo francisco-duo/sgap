@@ -1,4 +1,4 @@
-from .factories import InstitutionsFactory
+from .categories import Institutions
 
 
-institution = InstitutionsFactory()
+institution = Institutions()
