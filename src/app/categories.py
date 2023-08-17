@@ -4,7 +4,7 @@ from src.app.utils.insert_email import insert_email_in_sophia
 from src.app.utils.return_domain import return_the_domain
 from src.app.utils.return_classroom import return_classroom_dict
 
-from src.resources.resources_google import groups_insert, members_insert, spreedsheet
+from src.resources.resources_google import groups_insert, members_insert, users_insert, spreedsheet
 
 from googleapiclient.errors import HttpError
 
@@ -19,13 +19,25 @@ class Institutions:
             rm = s['rm']
             name = s['name']
 
+            first_name = name.split(" ")[-1]
+
             domain = return_the_domain(students=s["classroom"])
+
+            users_insert.insert_user_in_admin_sdk(
+                domain=domain,
+                name=name,
+                rm=rm
+            )
 
             insert_email_in_sophia(
                 id=id,
                 rm=rm,
                 name=name,
                 domain=domain
+            )
+
+            spreedsheet.member_log(
+                email=name, group_email=f"{first_name}{rm}@{domain}", action="CREATE", tab="emails"
             )
 
     @staticmethod
