@@ -22,12 +22,14 @@ class Institutions:
             first_name = name.split(" ")[-1]
 
             domain = return_the_domain(students=s["classroom"])
-
-            users_insert.insert_user_in_admin_sdk(
-                domain=domain,
-                name=name,
-                rm=rm
-            )
+            try:
+                users_insert.insert_user_in_admin_sdk(
+                    domain=domain,
+                    name=name,
+                    rm=rm
+                )
+            except Exception:
+                pass
 
             insert_email_in_sophia(
                 id=id,
